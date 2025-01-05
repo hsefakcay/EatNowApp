@@ -13,10 +13,13 @@ mixin LoginPageMixin on State<LoginView> {
   }
 
   // sign in with firebase authentication
-  Future<void> signIn() async {
+  Future<bool> signIn() async {
     {
-      await AuthService()
-          .signin(email: emailController.text, password: passwordController.text, context: context);
+      final success = await AuthServiceImpl().signIn(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      return success;
     }
   }
 }

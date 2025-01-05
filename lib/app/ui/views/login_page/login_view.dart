@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
+import 'package:yemek_soyle_app/app/ui/views/home_page/home_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/login_page/login_page_mixin.dart';
 import 'package:yemek_soyle_app/app/ui/views/sign_up_page/signup_view.dart';
 
@@ -151,7 +152,15 @@ class _LoginViewState extends State<LoginView> with LoginPageMixin {
         minimumSize: const Size(double.infinity, 60),
         elevation: 0,
       ),
-      onPressed: signIn,
+      onPressed: () async {
+        await signIn()
+            ? Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<HomeView>(
+                  builder: (context) => HomeView(),
+                ))
+            : null;
+      },
       child: Text(
         localization().loginTitle,
         style: Theme.of(context).textTheme.titleLarge?.copyWith(

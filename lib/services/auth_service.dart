@@ -1,83 +1,82 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:yemek_soyle_app/app/core/utils/toast_helper.dart';
-import 'package:yemek_soyle_app/app/ui/views/login_page/login_view.dart';
-import 'package:yemek_soyle_app/app/ui/views/main_tab_page/main_tab_view.dart';
+import 'package:logger/logger.dart';
+import 'package:yemek_soyle_app/services/error_service.dart';
 
-class AuthService {
+abstract class AuthService {
   Future<void> signUp({
     required String email,
     required String password,
-    required BuildContext context,
+  });
+
+  Future<void> signIn({
+    required String email,
+    required String password,
+  });
+
+  Future<void> signOut();
+}
+
+class AuthServiceImpl extends AuthService {
+  final ErrorService _errorService = ErrorService();
+  final Logger logger = Logger(); // Logger instance
+
+  @override
+  Future<bool> signUp({
+    required String email,
+    required String password,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
-      //hata olmazsa ana sayfaya yönlendirir
-      await Future<void>.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute<MainPage>(
-            builder: (context) => MainPage(),
-          ));
+      // Successfully signed up
+      // Call the onSignUpSuccess callback
+      return true;
     } on FirebaseAuthException catch (e) {
-      String message = '';
-      if (e.code == 'weak-password') {
-        message = 'The password provided is to weak';
-      } else if (e.code == 'email-already-in-use') {
-        message = "An account already exists with that email";
-      } else if (e.code == 'channel-error') {
-        message = "Channel error";
-      }
-
-      ToastHelper.showToast(message);
+      _errorService.handleAuthError(e);
+      return false;
     } catch (e) {
-      print(e);
+      if (e is Exception) {
+        _errorService.handleUnknownError(e);
+      } else {
+        // Diğer hata türleri için gerekli işlemler yapılabilir
+        logger.e("Unknown error: $e");
+      }
+      return false;
     }
   }
 
-  Future<void> signin({
+  @override
+  Future<bool> signIn({
     required String email,
     required String password,
-    required BuildContext context,
   }) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-//hata olmazsa ana sayfaya yönlendirir
-      await Future<void>.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute<MainPage>(
-            builder: (context) => MainPage(),
-          ));
+      // Successfully signed in
+      return true;
     } on FirebaseAuthException catch (e) {
-      String message = 'Kullanici bilgilerini kontrol edin !';
-      if (e.code == 'user-not-found') {
-        message = 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        message = "Wrong password provided for that user.";
-      }
-
-      ToastHelper.showToast(message);
+      _errorService.handleAuthError(e);
+      return false;
     } catch (e) {
-      print(e);
+      if (e is Exception) {
+        _errorService.handleUnknownError(e);
+      } else {
+        // Diğer hata türleri için gerekli işlemler yapılabilir
+        logger.e("Unknown error: $e");
+      }
+      return false;
     }
   }
 
-  Future<void> signOut({required BuildContext context}) async {
+  @override
+  Future<bool> signOut() async {
     await FirebaseAuth.instance.signOut();
-
-    await Future<void>.delayed(Durations.extralong4);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<LoginView>(
-          builder: (context) => LoginView(),
-        ));
+    //Successfully signed out
+    return true;
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
+import 'package:yemek_soyle_app/app/ui/views/home_page/home_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/sign_up_page/sign_up_mixin.dart';
 
 class SignupView extends StatefulWidget {
@@ -197,9 +198,15 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
         minimumSize: const Size(double.infinity, 60),
         elevation: 0,
       ),
-      onPressed: () {
+      onPressed: () async {
         if (emailController.text != "" && passwordController.text != "") {
-          signUp();
+          await signUp()
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute<HomeView>(
+                    builder: (context) => HomeView(),
+                  ))
+              : null;
         }
       },
       child: Text(
