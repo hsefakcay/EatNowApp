@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate
         ],
-        supportedLocales: const [Locale('en', ''), Locale('tr', '')],
-        title: 'Yemek Soyle',
+        supportedLocales: AppLocalizations.supportedLocales,
+        title: AppLocalizations.of(context)?.appName ?? "",
         theme: lightTheme,
         home: LoginView(),
       ),

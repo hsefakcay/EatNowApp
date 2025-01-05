@@ -1,0 +1,2 @@
+C:/Users/hsefa/Desktop/HSA/Flutter/yemek_soyle_app/android/app/.cxx/Debug/344o451n/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/hsefa/Desktop/HSA/Flutter/yemek_soyle_app/android/app/.cxx/Debug/344o451n/arm64-v8a/CMakeFiles/rebuild_cache.dir
