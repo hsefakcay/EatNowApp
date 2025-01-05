@@ -6,7 +6,6 @@ mixin DetailViewMixin on State<DetailView> {
   final FavoritesRepository favoritesRepository = FavoritesRepository();
   int orderQuantity = 0;
   final String userName = 'hsefakcay';
-
   bool isFavorite = false;
 
   void initState() {

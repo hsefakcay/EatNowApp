@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/product/language/localization_extension.dart';
 import 'package:yemek_soyle_app/app/product/widgets/cart_alert_dialog_widget.dart';
 import 'package:yemek_soyle_app/services/notification_service.dart';
 
@@ -16,13 +16,11 @@ class CardTextButtonWidget extends StatefulWidget {
   State<CardTextButtonWidget> createState() => _CardTextButtonWidgetState();
 }
 
-class _CardTextButtonWidgetState extends State<CardTextButtonWidget> {
-  final NotificationService notificationService = NotificationService();
-
+class _CardTextButtonWidgetState extends State<CardTextButtonWidget> with NotificationMixin {
   @override
   void initState() {
     super.initState();
-    notificationService.setup();
+    setupNotificationService();
   }
 
   @override
@@ -38,10 +36,8 @@ class _CardTextButtonWidgetState extends State<CardTextButtonWidget> {
       onPressed: () {
         if (widget.totalCoast <= 0) return;
 
-        notificationService.showNotification(
-          context.localizedAppName,
-          context.localizedOrderPreparing,
-        );
+        showCartNotification(context.localizedAppName, context.localizedOrderPreparing);
+
         showDialog<CartDialog>(
           context: context,
           barrierDismissible: false,
@@ -54,9 +50,14 @@ class _CardTextButtonWidgetState extends State<CardTextButtonWidget> {
   }
 }
 
-/// Extension for easier access to localization strings.
-extension LocalizationExtension on BuildContext {
-  String get localizedConfirmCart => AppLocalizations.of(this)!.confirmCart;
-  String get localizedAppName => AppLocalizations.of(this)!.appName;
-  String get localizedOrderPreparing => AppLocalizations.of(this)!.orderPreparing;
+mixin NotificationMixin on State<CardTextButtonWidget> {
+  final NotificationService notificationService = NotificationService();
+
+  void setupNotificationService() {
+    notificationService.setup();
+  }
+
+  void showCartNotification(String title, String body) {
+    notificationService.showNotification(title, body);
+  }
 }
