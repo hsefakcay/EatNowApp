@@ -47,7 +47,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.person_rounded,
-                            size: IconSizes.iconLarge,
+                            size: IconSize.large.value,
                             color: AppColor.primaryColor,
                           ),
                         ),

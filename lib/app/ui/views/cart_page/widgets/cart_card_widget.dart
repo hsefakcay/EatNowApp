@@ -41,7 +41,7 @@ class _cartCardWidgetState extends State<CartCardWidget> {
           child: Icon(
             Icons.delete,
             color: AppColor.whiteColor,
-            size: IconSizes.iconLarge,
+            size: IconSize.large.value,
           ),
         ),
       ),
@@ -90,7 +90,7 @@ class _cartCardWidgetState extends State<CartCardWidget> {
                       },
                       icon: Icon(
                         Icons.delete,
-                        size: IconSizes.iconLarge,
+                        size: IconSize.large.value,
                         color: AppColor.primaryColor,
                       )),
                   Text(

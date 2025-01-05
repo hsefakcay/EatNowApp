@@ -23,9 +23,9 @@ class MainFloatingActionButton extends StatelessWidget {
           },
         );
       },
-      child: const Icon(
+      child: Icon(
         Icons.shopping_cart_sharp,
-        size: IconSizes.iconLarge,
+        size: IconSize.medium.value,
       ),
     );
   }

@@ -28,13 +28,13 @@ class ProfileIconTextButton extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Icon(
                   icon,
-                  size: IconSizes.iconMedium,
+                  size: IconSize.normal.value,
                 ),
               ),
               Text(text),
             ],
           ),
-          const Icon(Icons.navigate_next_rounded, size: IconSizes.iconMedium),
+          Icon(Icons.navigate_next_rounded, size: IconSize.normal.value),
         ],
       ),
     );

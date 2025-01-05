@@ -7,26 +7,27 @@ import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
 class AddOrRemoveButtonWidget extends StatelessWidget {
   const AddOrRemoveButtonWidget({
     super.key,
-    required this.process,
-    required this.icon,
+    required this.onPressed,
+    required this.buttonIcon,
   });
 
   /// The function to be executed when the button is pressed.
-  final VoidCallback process;
+  final VoidCallback onPressed;
+
   /// The icon to be displayed on the button.
-  final IconData icon;
+  final IconData buttonIcon;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: ProjectUtility.primaryColorBoxDecoration,
       child: IconButton(
-        onPressed: process,
+        onPressed: onPressed,
         icon: Icon(
-          icon,
+          buttonIcon,
           color: AppColor.whiteColor,
         ),
-        iconSize: IconSizes.iconLarge,
+        iconSize: IconSize.medium.value,
       ),
     );
   }

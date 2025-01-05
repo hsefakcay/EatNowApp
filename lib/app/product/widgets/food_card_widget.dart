@@ -60,12 +60,12 @@ class _FoodCardState extends State<FoodCardWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: Icon(
                   Icons.thumb_up,
                   color: Colors.green,
-                  size: IconSizes.iconSmall,
+                  size: IconSize.small.value,
                 ),
               ),
               Text(
@@ -94,7 +94,7 @@ class _FoodCardState extends State<FoodCardWidget> {
                   child: Icon(
                     Icons.add_circle,
                     color: AppColor.primaryColor,
-                    size: IconSizes.iconLarge,
+                    size: IconSize.medium.value,
                   ),
                 ),
               ],

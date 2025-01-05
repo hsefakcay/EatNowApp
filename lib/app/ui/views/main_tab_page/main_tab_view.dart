@@ -25,7 +25,6 @@ class _MainPageState extends State<MainPage> with MainTabMixin {
         bottomNavigationBar: _bottomAppBar(context, notchValue));
   }
 
-
   //BottomNavigationBar widget
   BottomAppBar _bottomAppBar(BuildContext context, double notchValue) {
     return BottomAppBar(
@@ -38,19 +37,18 @@ class _MainPageState extends State<MainPage> with MainTabMixin {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           IconButton(
-            icon: Icon(
-              currentIndex == 0 ? Icons.home_rounded : Icons.home_outlined,
-              size: IconSizes.iconLarge,
-              color: AppColor.primaryColor,
-            ),
-            onPressed: () {
-              onTabTapped(0);
-            }
-          ),
+              icon: Icon(
+                currentIndex == 0 ? Icons.home_rounded : Icons.home_outlined,
+                size: IconSize.large.value,
+                color: AppColor.primaryColor,
+              ),
+              onPressed: () {
+                onTabTapped(0);
+              }),
           IconButton(
             icon: Icon(
               currentIndex == 1 ? Icons.favorite : Icons.favorite_outline_rounded,
-              size: IconSizes.iconLarge,
+              size: IconSize.large.value,
               color: AppColor.primaryColor,
             ),
             onPressed: () {
@@ -60,7 +58,7 @@ class _MainPageState extends State<MainPage> with MainTabMixin {
           IconButton(
             icon: Icon(
               currentIndex == 2 ? Icons.person : Icons.person_outline_rounded,
-              size: IconSizes.iconLarge,
+              size: IconSize.large.value,
               color: AppColor.primaryColor,
             ),
             onPressed: () {

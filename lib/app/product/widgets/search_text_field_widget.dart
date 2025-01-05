@@ -16,9 +16,9 @@ class searchFoodTextFieldWidget extends StatelessWidget {
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
           hintText: localizations.searchInFoodSoyle,
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.search,
-            size: IconSizes.iconMedium,
+            size: IconSize.normal.value,
           ),
           filled: true,
           fillColor: Colors.black12,

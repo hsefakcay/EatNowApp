@@ -95,7 +95,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AddOrRemoveButtonWidget(process: decrementOrderQuantity, icon: Icons.remove),
+        AddOrRemoveButtonWidget(onPressed: decrementOrderQuantity, buttonIcon: Icons.remove),
         Padding(
           padding: EdgeInsets.all(20.0),
           child: Text(
@@ -103,7 +103,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-        AddOrRemoveButtonWidget(process: incrementOrderQuantity, icon: Icons.add),
+        AddOrRemoveButtonWidget(onPressed: incrementOrderQuantity, buttonIcon: Icons.add),
       ],
     );
   }
@@ -164,7 +164,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(Icons.thumb_up, color: Colors.green, size: IconSizes.iconMedium),
+        Icon(Icons.thumb_up, color: Colors.green, size: IconSize.normal.value),
         const SizedBox(width: 5),
         Text(
           "% 87 ${localizations.liked}",

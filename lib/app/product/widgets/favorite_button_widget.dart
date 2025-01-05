@@ -62,7 +62,7 @@ class _FavoriteButtonState extends State<FavoriteButtonWidget> {
       icon: Icon(
         isFavorite ? Icons.favorite : Icons.favorite_border,
         color: AppColor.primaryColor,
-        size: IconSizes.iconLarge,
+        size: IconSize.medium.value,
       ),
       onPressed: _toggleFavorite,
     );
