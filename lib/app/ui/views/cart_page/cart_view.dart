@@ -17,41 +17,44 @@ class CartView extends StatefulWidget {
 class _CartViewState extends State<CartView> with CarPageMixin {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(centerTitle: true, title: _appBarTitleText(context)),
-      backgroundColor: AppColor.whiteColor,
-      body: BlocListener<CartPageCubit, List<CartFoods>>(
-        listener: (context, state) {
-          setState(() {}); // Değişiklik: BlocListener eklendi ve setState çağrıldı.
-        },
-        child: BlocBuilder<CartPageCubit, List<CartFoods>>(
-          builder: (context, cartFoodList) {
-            int totalCoast = cartFoodList.fold(
-                0, (sum, food) => sum + (int.parse(food.fiyat) * int.parse(food.siparisAdet)));
-
-            return Column(
-              children: [
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: GridView.builder(
-                    itemCount: cartFoodList.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      childAspectRatio: 1 / 0.4,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 5,
-                    ),
-                    itemBuilder: (context, index) {
-                      final food = cartFoodList[index];
-                      return CartCardWidget(food: food);
-                    },
-                  ),
-                )),
-                OrderSummaryWidget(totalCoast: totalCoast)
-              ],
-            );
+    return BlocProvider(
+      create: (context) => CartPageCubit(),
+      child: Scaffold(
+        appBar: AppBar(centerTitle: true, title: _appBarTitleText(context)),
+        backgroundColor: AppColor.whiteColor,
+        body: BlocListener<CartPageCubit, List<CartFoods>>(
+          listener: (context, state) {
+            setState(() {}); // Değişiklik: BlocListener eklendi ve setState çağrıldı.
           },
+          child: BlocBuilder<CartPageCubit, List<CartFoods>>(
+            builder: (context, cartFoodList) {
+              int totalCoast = cartFoodList.fold(
+                  0, (sum, food) => sum + (int.parse(food.fiyat) * int.parse(food.siparisAdet)));
+
+              return Column(
+                children: [
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: GridView.builder(
+                      itemCount: cartFoodList.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        childAspectRatio: 1 / 0.4,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 5,
+                      ),
+                      itemBuilder: (context, index) {
+                        final food = cartFoodList[index];
+                        return CartCardWidget(food: food);
+                      },
+                    ),
+                  )),
+                  OrderSummaryWidget(totalCoast: totalCoast)
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

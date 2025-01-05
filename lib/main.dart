@@ -4,10 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:yemek_soyle_app/app/core/bloc/app_bloc_providers.dart';
 import 'package:yemek_soyle_app/app/core/theme/light_theme.dart';
-import 'package:yemek_soyle_app/app/ui/cubit/cart_page_cubit.dart';
-import 'package:yemek_soyle_app/app/ui/cubit/favorites_page_cubit.dart';
-import 'package:yemek_soyle_app/app/ui/cubit/home_cubit.dart';
 import 'package:yemek_soyle_app/app/ui/views/login_page/login_view.dart';
 import 'package:yemek_soyle_app/firebase_options.dart';
 
@@ -28,17 +26,7 @@ class MyApp extends StatelessWidget {
       statusBarColor: Colors.transparent,
     ));
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => HomeCubit(),
-        ),
-        BlocProvider(
-          create: (context) => CartPageCubit(),
-        ),
-        BlocProvider(
-          create: (context) => FavoritesPageCubit(),
-        ),
-      ],
+      providers: AppBlocProviders.providers,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         localizationsDelegates: const [

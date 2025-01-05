@@ -18,46 +18,49 @@ class FavoritesView extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesView> with FavoritesViewMixin {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColor.whiteColor,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: _favoritesText(context),
-        ),
-        body: BlocBuilder<FavoritesPageCubit, List<Foods>>(
-          builder: (context, favFoodList) {
-            if (favFoodList.isNotEmpty) {
-              return Padding(
-                padding: const EdgeInsets.all(8),
-                child: GridView.builder(
-                  itemCount: favFoodList.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1 / 1.5,
-                    mainAxisSpacing: 5,
-                    crossAxisSpacing: 5,
+    return BlocProvider(
+      create: (context) => FavoritesPageCubit(),
+      child: Scaffold(
+          backgroundColor: AppColor.whiteColor,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: _favoritesText(context),
+          ),
+          body: BlocBuilder<FavoritesPageCubit, List<Foods>>(
+            builder: (context, favFoodList) {
+              if (favFoodList.isNotEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: GridView.builder(
+                    itemCount: favFoodList.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1 / 1.5,
+                      mainAxisSpacing: 5,
+                      crossAxisSpacing: 5,
+                    ),
+                    itemBuilder: (context, index) {
+                      var food = favFoodList[index];
+                      return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute<DetailView>(
+                                  builder: (context) => DetailView(food: food),
+                                ));
+                          },
+                          child: FoodCardWidget(food: food, isFavoritePage: true));
+                    },
                   ),
-                  itemBuilder: (context, index) {
-                    var food = favFoodList[index];
-                    return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute<DetailView>(
-                                builder: (context) => DetailView(food: food),
-                              ));
-                        },
-                        child: FoodCardWidget(food: food, isFavoritePage: true));
-                  },
-                ),
-              );
-            } else {
-              return Center(
-                child: _addFavoriteFoodText(context),
-              );
-            }
-          },
-        ));
+                );
+              } else {
+                return Center(
+                  child: _addFavoriteFoodText(context),
+                );
+              }
+            },
+          )),
+    );
   }
 
   Text _favoritesText(BuildContext context) {
