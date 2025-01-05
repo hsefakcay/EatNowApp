@@ -1,17 +1,14 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:yemek_soyle_app/app/core/bloc/app_bloc_providers.dart';
 import 'package:yemek_soyle_app/app/core/theme/light_theme.dart';
+import 'package:yemek_soyle_app/app/product/initialize/application_start.dart';
 import 'package:yemek_soyle_app/app/ui/views/login_page/login_view.dart';
-import 'package:yemek_soyle_app/firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await ApplicationStart.init();
   runApp(const MyApp());
 }
 
@@ -21,10 +18,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.light,
-      statusBarColor: Colors.transparent,
-    ));
     return MultiBlocProvider(
       providers: AppBlocProviders.providers,
       child: MaterialApp(
