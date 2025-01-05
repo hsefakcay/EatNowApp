@@ -22,7 +22,7 @@ class FavoriteButtonWidget extends StatefulWidget {
 
 class _FavoriteButtonState extends State<FavoriteButtonWidget> {
   bool isFavorite = false;
-  var favRepo = FavoritesRepository();
+  var favoriteRepository = FavoritesRepository();
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _FavoriteButtonState extends State<FavoriteButtonWidget> {
   }
 
   Future<void> _checkIfFavorite() async {
-    bool result = await favRepo.isFavoriteFood(widget.food.name);
+    bool result = await favoriteRepository.isFavoriteFood(widget.food.name);
     setState(() {
       isFavorite = result;
       if (isFavorite) {
@@ -46,9 +46,9 @@ class _FavoriteButtonState extends State<FavoriteButtonWidget> {
   void _toggleFavorite() {
     setState(() {
       if (isFavorite == false) {
-        favRepo.addToFavorites(widget.food);
+        favoriteRepository.addToFavorites(widget.food);
       } else {
-        favRepo.removeFromFavorites(widget.food.name);
+        favoriteRepository.removeFromFavorites(widget.food.name);
       }
       isFavorite = !isFavorite;
       //silindiğinde sayfa güncellemesi

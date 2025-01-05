@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/core/utils/screen_utility.dart';
+import 'package:yemek_soyle_app/app/core/utils/snackbar_service.dart';
 import 'package:yemek_soyle_app/app/data/entity/cart_foods.dart';
 import 'package:yemek_soyle_app/app/data/entity/foods.dart';
 import 'package:yemek_soyle_app/app/product/widgets/add_or_remove_button_widget.dart';
@@ -17,7 +18,7 @@ import 'package:yemek_soyle_app/app/ui/views/cart_page/cart_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/detail_page/detail_view_mixin.dart';
 
 class DetailView extends StatefulWidget {
-  final Foods food; // Immutable olmalı
+  final Foods food;
 
   const DetailView({
     required this.food,
@@ -29,7 +30,6 @@ class DetailView extends StatefulWidget {
 }
 
 class _DetailViewState extends State<DetailView> with DetailViewMixin {
-  @override
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
@@ -123,7 +123,6 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
           onPressed: () {
             if (orderQuantity > 0) {
               //Sepete ekleme fonksiyonu ve sepet sayfasına gitme
-
               final cartItem = CartFoods(
                   id: widget.food.id,
                   ad: widget.food.name,
@@ -138,25 +137,16 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
                 MaterialPageRoute<CartView>(builder: (context) => const CartView()),
               );
             } else {
-              _showSnackbar(context, localizations);
+              // Snackbar gösterimi
+              SnackbarService.showSnackbar(
+                  context: context,
+                  message: localizations.snackBarTitleZeroOrder,
+                  backgroundColor: AppColor.primaryLightColor);
             }
           },
         ),
       ),
     );
-  }
-
-  // Snackbar gösterimi
-  void _showSnackbar(BuildContext context, AppLocalizations localizations) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        localizations.snackBarTitleZeroOrder,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-      behavior: SnackBarBehavior.fixed,
-      duration: Durations.long4,
-      backgroundColor: AppColor.primaryLightColor,
-    ));
   }
 
   // Favori bilgisi gösterimi

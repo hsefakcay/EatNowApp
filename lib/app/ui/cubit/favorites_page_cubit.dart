@@ -6,10 +6,10 @@ class FavoritesPageCubit extends Cubit<List<Foods>> {
   FavoritesPageCubit() : super(<Foods>[]);
 
   //yrepo = yemeker Dao Repo nesnesi
-  var favsRepo = FavoritesRepository();
+  var favoritesRepository = FavoritesRepository();
 
   Future<void> loadFavoriteFoods() async {
-    var list = await favsRepo.loadFavoriteFoods();
+    var list = await favoritesRepository.loadFavoriteFoods();
     emit(list);
   }
 }
