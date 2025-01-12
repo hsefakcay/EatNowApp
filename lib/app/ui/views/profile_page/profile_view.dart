@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
@@ -33,7 +34,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: AppPadding.allLarge,
           child: Column(
             children: [
               Container(
@@ -44,7 +45,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: AppPadding.allxSmall,
                           child: Icon(
                             Icons.person_rounded,
                             size: IconSize.large.value,

@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
-import 'package:yemek_soyle_app/app/ui/views/home_page/home_view.dart';
+import 'package:yemek_soyle_app/app/ui/views/main_tab_page/main_tab_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/sign_up_page/sign_up_mixin.dart';
 
 class SignupView extends StatefulWidget {
@@ -46,13 +47,13 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
                   left: 0, // Sol hizalama ekleyelim
                   right: 0,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    padding: AppPadding.horizontalMedium,
                     child: Container(
                       decoration: ProjectUtility.signUpBoxDecoration,
                       height: MediaQuery.sizeOf(context).height * 0.73,
                       child: SafeArea(
                         child: SingleChildScrollView(
-                          padding: const EdgeInsets.all(24),
+                          padding: AppPadding.allxLarge,
                           child: Column(
                             children: [
                               _nameSurnameField(context),
@@ -75,7 +76,7 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
 
   Container _arrowBackButton() {
     return Container(
-      margin: const EdgeInsets.only(left: 10),
+      margin: AppPadding.leftSmall,
       child: Center(
         child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColor.whiteColor),
       ),
@@ -203,8 +204,8 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
           await signUp()
               ? Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute<HomeView>(
-                    builder: (context) => HomeView(),
+                  MaterialPageRoute<MainPage>(
+                    builder: (context) => MainPage(),
                   ))
               : null;
         }
@@ -221,7 +222,7 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
 
   Widget _signinText(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: AppPadding.bottomMedium,
       child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(children: [

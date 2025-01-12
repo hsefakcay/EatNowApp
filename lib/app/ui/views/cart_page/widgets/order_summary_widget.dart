@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
 import 'package:yemek_soyle_app/app/core/utils/screen_utility.dart';
@@ -24,7 +25,7 @@ class OrderSummaryWidget extends StatelessWidget {
       decoration: ProjectUtility.cartBoxDecoration,
       alignment: Alignment.center,
       child: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 30, bottom: 10, right: 30),
+        padding: AppPadding.customLargeSmall,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

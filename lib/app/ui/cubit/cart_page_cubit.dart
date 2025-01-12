@@ -10,7 +10,6 @@ class CartPageCubit  extends Cubit<List<CartFoods>> {
 
   Future<void> loadCartFoods() async {
     var list = await yrepo.loadCartFoods();
-
     emit(list);
   }
 

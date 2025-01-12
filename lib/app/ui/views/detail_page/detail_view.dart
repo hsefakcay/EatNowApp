@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
@@ -45,7 +46,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 12.0),
+            padding: AppPadding.rightNormal,
             child: FavoriteButtonWidget(food: widget.food, isFavoritePage: false),
           )
         ],
@@ -80,8 +81,8 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
             child: Text(
               //toplam tutar
               '₺ ${int.parse(widget.food.price) * orderQuantity}',
-              //TODO: Use Theme.of(context).textTheme to provide the style dynamically
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style:
+                  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -97,7 +98,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
       children: [
         AddOrRemoveButtonWidget(onPressed: decrementOrderQuantity, buttonIcon: Icons.remove),
         Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: AppPadding.allLarge,
           child: Text(
             "$orderQuantity",
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -125,16 +126,17 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
               //Sepete ekleme fonksiyonu ve sepet sayfasına gitme
               final cartItem = CartFoods(
                   id: widget.food.id,
-                  ad: widget.food.name,
-                  resim: widget.food.image,
-                  fiyat: widget.food.price,
-                  siparisAdet: orderQuantity.toString(),
-                  kullaniciAdi: userName);
+                  name: widget.food.name,
+                  image: widget.food.image,
+                  price: widget.food.price,
+                  orderQuantity: orderQuantity.toString(),
+                  username: userName);
+
               context.read<CartPageCubit>().addToCart(cartItem);
 
               Navigator.push(
                 context,
-                MaterialPageRoute<CartView>(builder: (context) => const CartView()),
+                MaterialPageRoute<CartView>(builder: (context) => CartView()),
               );
             } else {
               // Snackbar gösterimi

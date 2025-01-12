@@ -11,10 +11,10 @@ class CartFoodsResponse {
     final jsonArray = json["sepet_yemekler"] as List;
     final success = json["success"] as int;
 
-    final yemekler = jsonArray
-        .map((jsonArrayNesnesi) => CartFoods.fromJson(jsonArrayNesnesi as Map<String, dynamic>))
+    final cartFoods = jsonArray
+        .map((jsonArrayObject) => CartFoods.fromJson(jsonArrayObject as Map<String, dynamic>))
         .toList();
 
-    return CartFoodsResponse(cartFoods: yemekler, success: success);
+    return CartFoodsResponse(cartFoods: cartFoods, success: success);
   }
 }

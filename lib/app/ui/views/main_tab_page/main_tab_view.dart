@@ -29,6 +29,7 @@ class _MainPageState extends State<MainPage> with MainTabMixin {
   BottomAppBar _bottomAppBar(BuildContext context, double notchValue) {
     return BottomAppBar(
       color: AppColor.whiteColor,
+      surfaceTintColor: AppColor.primaryColor,
       height: ScreenUtil.screenHeight(context) * 0.08,
       padding: const EdgeInsets.only(bottom: 3),
       shape: const CircularNotchedRectangle(),
@@ -36,38 +37,50 @@ class _MainPageState extends State<MainPage> with MainTabMixin {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          IconButton(
-              icon: Icon(
-                currentIndex == 0 ? Icons.home_rounded : Icons.home_outlined,
-                size: IconSize.large.value,
-                color: AppColor.primaryColor,
-              ),
-              onPressed: () {
-                onTabTapped(0);
-              }),
-          IconButton(
-            icon: Icon(
-              currentIndex == 1 ? Icons.favorite : Icons.favorite_outline_rounded,
-              size: IconSize.large.value,
-              color: AppColor.primaryColor,
-            ),
-            onPressed: () {
-              onTabTapped(1);
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              currentIndex == 2 ? Icons.person : Icons.person_outline_rounded,
-              size: IconSize.large.value,
-              color: AppColor.primaryColor,
-            ),
-            onPressed: () {
-              onTabTapped(2);
-            },
-          ),
+          _homeButton(),
+          _favoriteButton(),
+          _profileButton(),
           const SizedBox(width: 0),
         ],
       ),
     );
+  }
+
+  IconButton _profileButton() {
+    return IconButton(
+      icon: Icon(
+        currentIndex == 2 ? Icons.person : Icons.person_outline_rounded,
+        size: IconSize.medium.value,
+        color: AppColor.primaryColor,
+      ),
+      onPressed: () {
+        onTabTapped(2);
+      },
+    );
+  }
+
+  IconButton _favoriteButton() {
+    return IconButton(
+      icon: Icon(
+        currentIndex == 1 ? Icons.favorite : Icons.favorite_outline_rounded,
+        size: IconSize.medium.value,
+        color: AppColor.primaryColor,
+      ),
+      onPressed: () {
+        onTabTapped(1);
+      },
+    );
+  }
+
+  IconButton _homeButton() {
+    return IconButton(
+        icon: Icon(
+          currentIndex == 0 ? Icons.home_rounded : Icons.home_outlined,
+          size: IconSize.medium.value,
+          color: AppColor.primaryColor,
+        ),
+        onPressed: () {
+          onTabTapped(0);
+        });
   }
 }

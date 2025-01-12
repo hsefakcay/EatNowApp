@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
 import 'package:yemek_soyle_app/app/data/entity/foods.dart';
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomeView> with HomeViewMixin {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: AppPadding.allSmall,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomeView> with HomeViewMixin {
               Expanded(
                 child: foodList.isNotEmpty
                     ? Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: AppPadding.allxSmall,
                         child: GridView.builder(
                           itemCount: foodList.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

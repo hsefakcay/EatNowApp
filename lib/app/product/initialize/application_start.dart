@@ -5,7 +5,6 @@ import 'package:yemek_soyle_app/firebase_options.dart';
 
 class ApplicationStart {
   static Future<void> init() async {
-    WidgetsFlutterBinding.ensureInitialized();
     await _initFirebase();
     _initSystemUI();
   }

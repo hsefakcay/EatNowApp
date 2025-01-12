@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   // Private constructor
-  DatabaseHelper._();
+  DatabaseHelper();
 
   // Private database name
   static final String _databaseName = "yemek_soyle.sqlite";
@@ -22,16 +22,22 @@ class DatabaseHelper {
     if (await databaseExists(databasePath)) {
       _logger.d("Veritabanı var. Kopyalamaya gerek yok.");
     } else {
-      List<int> bytes = await compute(_loadDatabaseBytes, _databaseName);
+      // `rootBundle.load` çağrısı ana iş parçacığında yapılır
+      ByteData data = await rootBundle.load("database/$_databaseName");
+      List<int> bytes = data.buffer.asUint8List(); // Convert ByteData to List<int> (on main thread)
+
+      // Isolated iş parçacığında işlemler için compute kullanılır
+      bytes = await compute(_writeDatabaseBytes, bytes);
+
       await File(databasePath).writeAsBytes(bytes, flush: true);
       _logger.d("Veritabanı kopyalandı.");
     }
     return openDatabase(databasePath);
   }
 
-  // Compute ile byte okuma işlemi
-  static Future<List<int>> _loadDatabaseBytes(String databaseName) async {
-    ByteData data = await rootBundle.load("database/$databaseName");
-    return data.buffer.asInt8List(data.offsetInBytes, data.lengthInBytes);
+// Compute ile bağımsız işlemleri çalıştıran yöntem
+  static Future<List<int>> _writeDatabaseBytes(List<int> bytes) async {
+    // Özel bir işlem yapılmıyorsa, bu işlev gerekmez
+    return bytes; // Burada, sadece bağımsız bir işlem döndürülür
   }
 }

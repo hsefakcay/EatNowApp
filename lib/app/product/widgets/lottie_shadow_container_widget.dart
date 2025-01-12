@@ -25,7 +25,7 @@ class LottieShadowContainerWidget extends StatelessWidget {
         ],
       ),
       child: ClipOval(
-          child: Lottie.asset("lib/assets/animations/food_animation.json", fit: BoxFit.cover)),
+          child: Lottie.asset("lib/app/assets/animations/food_animation.json", fit: BoxFit.cover)),
     );
   }
 }

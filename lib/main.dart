@@ -8,6 +8,7 @@ import 'package:yemek_soyle_app/app/product/initialize/application_start.dart';
 import 'package:yemek_soyle_app/app/ui/views/login_page/login_view.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await ApplicationStart.init();
   runApp(const MyApp());
 }

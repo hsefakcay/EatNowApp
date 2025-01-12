@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import 'package:yemek_soyle_app/app/data/entity/cart_foods.dart';
 import 'package:yemek_soyle_app/app/data/entity/cart_foods_response.dart';
 import 'package:yemek_soyle_app/app/data/entity/foods.dart';
 import 'package:yemek_soyle_app/app/data/entity/foods_response.dart';
 
 class FoodsDaoRepository {
-  List<Foods> parseFoods(String cevap) {
-    final decoded = json.decode(cevap) as Map<String, dynamic>;
+  List<Foods> parseFoods(String response) {
+    final decoded = json.decode(response) as Map<String, dynamic>;
     return FoodsResponse.fromJson(decoded).foods;
   }
 
@@ -27,22 +28,22 @@ class FoodsDaoRepository {
   Future<void> addToCart(CartFoods cartFood) async {
     var url = "http://kasimadalan.pe.hu/yemekler/sepeteYemekEkle.php";
     var data = {
-      "yemek_adi": cartFood.ad,
-      "yemek_resim_adi": cartFood.resim,
-      "yemek_fiyat": cartFood.fiyat,
-      "yemek_siparis_adet": cartFood.siparisAdet,
-      "kullanici_adi": cartFood.kullaniciAdi
+      "yemek_adi": cartFood.name,
+      "yemek_resim_adi": cartFood.image,
+      "yemek_fiyat": cartFood.price,
+      "yemek_siparis_adet": cartFood.orderQuantity,
+      "kullanici_adi": cartFood.username
     };
-     await Dio().post<dynamic>(url, data: FormData.fromMap(data));
+    await Dio().post<dynamic>(url, data: FormData.fromMap(data));
   }
 
-  Future<void> removeFromCart(CartFoods silinecekYemek) async {
+  Future<void> removeFromCart(CartFoods removeToFood) async {
     var url = "http://kasimadalan.pe.hu/yemekler/sepettenYemekSil.php";
     var data = {
-      "sepet_yemek_id": silinecekYemek.id,
-      "kullanici_adi": silinecekYemek.kullaniciAdi,
+      "sepet_yemek_id": removeToFood.id,
+      "kullanici_adi": removeToFood.username,
     };
-    await Dio().post<Map<String, dynamic>>(url, data: FormData.fromMap(data));
+    await Dio().post<dynamic>(url, data: FormData.fromMap(data));
   }
 
   Future<List<CartFoods>> loadCartFoods() async {
@@ -50,7 +51,7 @@ class FoodsDaoRepository {
     final userId = {'kullanici_adi': 'hsefakcay'};
 
     try {
-      var response = await Dio().post<Map<String, dynamic>>(url, data: FormData.fromMap(userId));
+      var response = await Dio().post<String>(url, data: FormData.fromMap(userId));
 
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.data.toString());
@@ -59,13 +60,13 @@ class FoodsDaoRepository {
         if (jsonData['success'] == 1 && jsonData['sepet_yemekler'] != null) {
           return parseCartFoods(response.data.toString());
         } else {
-          print("Sepet boş ya da kullanıcının sepeti bulunamadı.");
+          Logger().d("Sepet boş ya da kullanıcının sepeti bulunamadı.");
         }
       } else {
-        print("HTTP isteği başarısız oldu. Kod: ${response.statusCode}");
+        Logger().d("HTTP isteği başarısız oldu. Kod: ${response.statusCode}");
       }
     } catch (e) {
-      print("Bir hata oluştu: $e");
+      Logger().d("Bir hata oluştu: $e");
     }
 
     return [];

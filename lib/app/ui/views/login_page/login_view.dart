@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
-import 'package:yemek_soyle_app/app/ui/views/home_page/home_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/login_page/login_page_mixin.dart';
+import 'package:yemek_soyle_app/app/ui/views/main_tab_page/main_tab_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/sign_up_page/signup_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -56,7 +57,7 @@ class _LoginViewState extends State<LoginView> with LoginPageMixin {
                 left: 0,
                 right: 0,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  padding: AppPadding.horizontalMedium,
                   child: Container(
                     decoration: ProjectUtility.signUpBoxDecoration,
                     height: MediaQuery.sizeOf(context).height * 0.6,
@@ -66,7 +67,7 @@ class _LoginViewState extends State<LoginView> with LoginPageMixin {
                           maxHeight: MediaQuery.sizeOf(context).height * 0.5,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(24.0),
+                          padding: AppPadding.allxLarge,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -109,7 +110,7 @@ class _LoginViewState extends State<LoginView> with LoginPageMixin {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               filled: true,
-              hintText: 'mahdiforwork@gmail.com',
+              hintText: 'xxx@gmail.com',
               hintStyle: TextStyle(
                   color: AppColor.lightgreyColor, fontWeight: FontWeight.normal, fontSize: 14),
               fillColor: const Color(0xffF7F7F9),
@@ -156,8 +157,8 @@ class _LoginViewState extends State<LoginView> with LoginPageMixin {
         await signIn()
             ? Navigator.pushReplacement(
                 context,
-                MaterialPageRoute<HomeView>(
-                  builder: (context) => HomeView(),
+                MaterialPageRoute<MainPage>(
+                  builder: (context) => MainPage(),
                 ))
             : null;
       },
@@ -173,7 +174,7 @@ class _LoginViewState extends State<LoginView> with LoginPageMixin {
 
   Widget _signupText(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: AppPadding.bottomMedium,
       child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(children: [

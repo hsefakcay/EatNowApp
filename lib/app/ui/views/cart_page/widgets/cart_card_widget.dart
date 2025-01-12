@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 import 'package:yemek_soyle_app/app/core/constants/color.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
@@ -37,12 +38,8 @@ class _cartCardWidgetState extends State<CartCardWidget> {
         decoration: ProjectUtility.cartDismissibleBoxDecoration,
         alignment: Alignment.centerRight,
         child: Padding(
-          padding: EdgeInsets.only(right: 30),
-          child: Icon(
-            Icons.delete,
-            color: AppColor.whiteColor,
-            size: IconSize.large.value,
-          ),
+          padding: AppPadding.rightLarge,
+          child: Icon(Icons.delete, color: AppColor.whiteColor, size: IconSize.large.value),
         ),
       ),
       child: Card(
@@ -53,59 +50,74 @@ class _cartCardWidgetState extends State<CartCardWidget> {
           children: [
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Image.network(
-                    "http://kasimadalan.pe.hu/yemekler/resimler/${widget.food.resim}",
-                    width: ScreenUtil.screenWidth(context) * 0.3,
-                  ),
-                ),
+                _foodImage(context),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.food.ad,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(fontWeight: FontWeight.w900)),
-                    Text("${localizations.price}₺ ${widget.food.fiyat}",
-                        style: Theme.of(context).textTheme.titleMedium),
-                    Text("${localizations.count} ${widget.food.siparisAdet}",
-                        style: Theme.of(context).textTheme.titleMedium),
+                    _foodName(context),
+                    _priceTitle(localizations, context),
+                    _orderCountTitle(localizations, context),
                   ],
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(14.0),
+              padding: AppPadding.allRegular,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        context.read<CartPageCubit>().removeFromCart(widget.food);
-                        context.read<CartPageCubit>().loadCartFoods();
-                      },
-                      icon: Icon(
-                        Icons.delete,
-                        size: IconSize.large.value,
-                        color: AppColor.primaryColor,
-                      )),
-                  Text(
-                    "₺${int.parse(widget.food.fiyat) * int.parse(widget.food.siparisAdet)}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  )
-                ],
+                children: [_deleteCartFoodButton(context), _totalPriceTitle(context)],
               ),
             )
           ],
         ),
       ),
     );
+  }
+
+  Text _totalPriceTitle(BuildContext context) {
+    return Text(
+      "₺${int.parse(widget.food.price) * int.parse(widget.food.orderQuantity)}",
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+    );
+  }
+
+  Padding _foodImage(BuildContext context) {
+    return Padding(
+      padding: AppPadding.allRegular,
+      child: Image.network(
+        "http://kasimadalan.pe.hu/yemekler/resimler/${widget.food.image}",
+        width: ScreenUtil.screenWidth(context) * 0.3,
+      ),
+    );
+  }
+
+  Text _orderCountTitle(AppLocalizations localizations, BuildContext context) {
+    return Text("${localizations.count} ${widget.food.orderQuantity}",
+        style: Theme.of(context).textTheme.titleMedium);
+  }
+
+  Text _priceTitle(AppLocalizations localizations, BuildContext context) {
+    return Text("${localizations.price}₺ ${widget.food.price}",
+        style: Theme.of(context).textTheme.titleMedium);
+  }
+
+  Text _foodName(BuildContext context) {
+    return Text(widget.food.name,
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900));
+  }
+
+  IconButton _deleteCartFoodButton(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          context.read<CartPageCubit>().removeFromCart(widget.food);
+          context.read<CartPageCubit>().loadCartFoods();
+        },
+        icon: Icon(
+          Icons.delete,
+          size: IconSize.large.value,
+          color: AppColor.primaryColor,
+        ));
   }
 }

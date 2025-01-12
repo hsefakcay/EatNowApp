@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 
 class ProfileIconTextButton extends StatelessWidget {
@@ -25,7 +26,7 @@ class ProfileIconTextButton extends StatelessWidget {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: AppPadding.allMedium,
                 child: Icon(
                   icon,
                   size: IconSize.normal.value,
