@@ -1,5 +1,5 @@
-# 🍽️ YemekSöyleApp - EatNowApp
-YemekSöyleApp is an e-commerce mobile application that allows users to browse and order various types of food. The app provides a fast and easy ordering experience with food listings, price details, and images. YemekSöyleApp offers a user-friendly interface for ordering and managing meals.
+# 🍽️ EatNowApp - YemekSöyleApp
+EatNowApp is an e-commerce mobile application that allows users to browse and order various types of food. The app provides a fast and easy ordering experience with food listings, price details, and images. YemekSöyleApp offers a user-friendly interface for ordering and managing meals.
 
 YemekSöyleApp, kullanıcıların çeşitli yiyecekleri gözden geçirebileceği ve sipariş verebileceği bir e-ticaret mobil uygulamasıdır. Uygulama, yiyecek listelemeleri, fiyat detayları ve görseller aracılığıyla hızlı ve kolay bir sipariş deneyimi sunar. YemekSöyleApp, yemeklerin sipariş edilmesini ve yönetilmesini kullanıcı dostu bir arayüzle sağlar.
 
