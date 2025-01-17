@@ -5,7 +5,7 @@ YemekSöyleApp, kullanıcıların çeşitli yiyecekleri gözden geçirebileceği
 
 ---
 
-## 🚀 Features - Özellikler
+## 🚀 Features
 - 🍴 Browse and view detailed food items with prices and images
 - 🛒 Add and remove items from the shopping cart
 - 🔍 Search functionality for easy food discovery
@@ -17,7 +17,7 @@ YemekSöyleApp, kullanıcıların çeşitli yiyecekleri gözden geçirebileceği
 
 ---
 
-## 🛠️ Technologies Used - Kullanılan Teknolojiler
+## 🛠️ Technologies Used
 - Flutter: Beautiful and responsive UI development.
 - Dio: Efficient HTTP requests.
 - Bloc: State management for better code organization.
@@ -29,7 +29,7 @@ YemekSöyleApp, kullanıcıların çeşitli yiyecekleri gözden geçirebileceği
 
 ---
 
-## 🛠️ Installation- Kurulum
+## 🛠️ Installation
 
 - Clone the repository:
 ```plaintext
@@ -46,7 +46,7 @@ flutter pub get
 ```plaintext
 flutter run
 ```
-## 🎥 Screenshots - Uygulama Görüntüleri
+## 🎥 Screenshots 
 ![image](https://github.com/user-attachments/assets/3f7c4a2d-dd33-4e3c-bbf7-d99b387f2d1c)
 
 ![image](https://github.com/user-attachments/assets/0a98e817-28dd-42a6-878c-dd59a25d93fb)
