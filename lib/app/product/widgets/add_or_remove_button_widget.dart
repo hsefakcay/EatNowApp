@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
 
@@ -25,7 +25,7 @@ class AddOrRemoveButtonWidget extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(
           buttonIcon,
-          color: AppColor.whiteColor,
+          color: AppColorConstants.whiteColor,
         ),
         iconSize: IconSize.medium.value,
       ),

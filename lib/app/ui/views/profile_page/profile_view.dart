@@ -1,15 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/assets/l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
-import 'package:yemek_soyle_app/app/ui/views/login_page/login_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/main_tab_page/main_tab_view.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_strings.dart';
 import 'package:yemek_soyle_app/app/ui/views/profile_page/widgets/profile_icon_text_button_widget.dart';
-import 'package:yemek_soyle_app/services/auth_service.dart';
+import 'package:yemek_soyle_app/services/auth/auth_service.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -22,15 +22,15 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.whiteColor,
+      backgroundColor: AppColorConstants.whiteColor,
       appBar: AppBar(
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: AppColorConstants.primaryColor,
         automaticallyImplyLeading: false,
         title: Text(AppLocalizations.of(context)!.profileTitle,
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall
-                ?.copyWith(color: AppColor.whiteColor, fontWeight: FontWeight.bold)),
+                ?.copyWith(color: AppColorConstants.whiteColor, fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -49,13 +49,13 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
                           child: Icon(
                             Icons.person_rounded,
                             size: IconSize.large.value,
-                            color: AppColor.primaryColor,
+                            color: AppColorConstants.primaryColor,
                           ),
                         ),
                         Text(FirebaseAuth.instance.currentUser!.email.toString(),
                             style: Theme.of(context).textTheme.titleLarge),
                         Text(
-                          "+90 507 XXXX XX",
+                          AppStrings.phoneNumber,
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
@@ -101,13 +101,14 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
                       text: AppLocalizations.of(context)!.logoutTitle,
                       icon: Icons.exit_to_app_rounded,
                       onPressed: () async {
-                        await AuthServiceImpl().signOut()
-                            ? Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute<LoginView>(
-                                  builder: (context) => LoginView(),
-                                ))
-                            : null;
+                        await AuthServiceImpl().signOut();
+                        // Auth guard otomatik olarak login sayfasına yönlendirecek
+                        if (context.mounted) {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/',
+                            (route) => false,
+                          );
+                        }
                       }),
                   const SizedBox(height: 75),
                 ],

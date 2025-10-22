@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_strings.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 
 class LottieShadowContainerWidget extends StatelessWidget {
   const LottieShadowContainerWidget({
@@ -15,17 +16,16 @@ class LottieShadowContainerWidget extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColor.primaryLightColor,
+        color: AppColorConstants.primaryLightColor,
         boxShadow: [
           BoxShadow(
             color: Colors.yellow.shade500, // Gölge rengi ve şeffaflık
-            spreadRadius: 10, // Gölgenin yayılma yarıçapı
-            blurRadius: 30, // Gölgenin bulanıklık yarıçapı
+            spreadRadius: AppStrings.shadowSpreadRadius, // Gölgenin yayılma yarıçapı
+            blurRadius: AppStrings.shadowBlurRadius, // Gölgenin bulanıklık yarıçapı
           ),
         ],
       ),
-      child: ClipOval(
-          child: Lottie.asset("lib/app/assets/animations/food_animation.json", fit: BoxFit.cover)),
+      child: ClipOval(child: Lottie.asset(AppStrings.lottieAnimationPath, fit: BoxFit.cover)),
     );
   }
 }

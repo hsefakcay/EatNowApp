@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 import 'package:yemek_soyle_app/app/data/entity/cart_foods.dart';
 import 'package:yemek_soyle_app/app/ui/cubit/cart_page_cubit.dart';
 import 'package:yemek_soyle_app/app/ui/views/cart_page/car_page_mixin.dart';
@@ -20,9 +20,13 @@ class _CartViewState extends State<CartView> with CarPageMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: _appBarTitleText(context)),
-      backgroundColor: AppColor.whiteColor,
+      backgroundColor: AppColorConstants.whiteColor,
       body: BlocBuilder<CartPageCubit, List<CartFoods>>(
         builder: (context, cartFoodList) {
+          // İlk yükleme için sepet foods'ları yükle
+          if (cartFoodList.isEmpty) {
+            context.read<CartPageCubit>().loadCartFoods();
+          }
           int totalCoast = cartFoodList.fold(
               0, (sum, food) => sum + (int.parse(food.price) * int.parse(food.orderQuantity)));
 
@@ -45,7 +49,10 @@ class _CartViewState extends State<CartView> with CarPageMixin {
                   },
                 ),
               )),
-              OrderSummaryWidget(totalCoast: totalCoast)
+              OrderSummaryWidget(
+                totalCoast: totalCoast,
+                cartItemCount: cartFoodList.length,
+              )
             ],
           );
         },

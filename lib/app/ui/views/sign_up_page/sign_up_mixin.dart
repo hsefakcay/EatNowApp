@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_soyle_app/app/ui/views/sign_up_page/signup_view.dart';
-import 'package:yemek_soyle_app/services/auth_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/services/auth/auth_service.dart';
+import 'package:yemek_soyle_app/app/assets/l10n/app_localizations.dart';
 
 mixin SignUpPageMixin on State<SignupView> {
   final TextEditingController emailController = TextEditingController();
@@ -18,6 +18,7 @@ mixin SignUpPageMixin on State<SignupView> {
       final success = await AuthServiceImpl().signUp(
         email: emailController.text,
         password: passwordController.text,
+        localizations: localization(),
       );
       return success;
     }

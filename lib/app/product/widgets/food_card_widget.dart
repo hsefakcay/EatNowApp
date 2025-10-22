@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/assets/l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/core/utils/screen_utility.dart';
 import 'package:yemek_soyle_app/app/data/entity/foods.dart';
@@ -11,10 +11,12 @@ import 'package:yemek_soyle_app/app/product/widgets/food_image_widget.dart';
 class FoodCardWidget extends StatefulWidget {
   Foods food;
   bool isFavoritePage;
+  VoidCallback? onFavoriteChanged;
 
   FoodCardWidget({
     required this.food,
     required this.isFavoritePage,
+    this.onFavoriteChanged,
     super.key,
   });
 
@@ -29,7 +31,7 @@ class _FoodCardState extends State<FoodCardWidget> {
 
     return Card(
       elevation: 10,
-      color: AppColor.whiteColor,
+      color: AppColorConstants.whiteColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -45,6 +47,7 @@ class _FoodCardState extends State<FoodCardWidget> {
                   child: FavoriteButtonWidget(
                     food: widget.food,
                     isFavoritePage: widget.isFavoritePage,
+                    onFavoriteChanged: widget.onFavoriteChanged,
                   )),
             ],
           ),
@@ -52,7 +55,7 @@ class _FoodCardState extends State<FoodCardWidget> {
             widget.food.name,
             // ignore: flutter_style_todos
             style: TextStyle(
-              color: AppColor.blackColor,
+              color: AppColorConstants.blackColor,
               fontWeight: FontWeight.bold,
               fontSize: 24,
             ),
@@ -86,14 +89,14 @@ class _FoodCardState extends State<FoodCardWidget> {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: AppColor.blackColor,
+                    color: AppColorConstants.blackColor,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: Icon(
                     Icons.add_circle,
-                    color: AppColor.primaryColor,
+                    color: AppColorConstants.primaryColor,
                     size: IconSize.medium.value,
                   ),
                 ),

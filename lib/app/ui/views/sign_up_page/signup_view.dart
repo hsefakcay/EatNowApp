@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/assets/l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 import 'package:yemek_soyle_app/app/core/utils/project_utility.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_strings.dart';
 import 'package:yemek_soyle_app/app/ui/views/main_tab_page/main_tab_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/sign_up_page/sign_up_mixin.dart';
 
@@ -15,7 +16,7 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> with SignUpPageMixin {
-  final String _hintTitle = 'hsaforwork@gmail.com';
+  final String _hintTitle = AppStrings.emailHint;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
         resizeToAvoidBottomInset: true,
         bottomNavigationBar: _signinText(context),
         appBar: AppBar(
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: AppColorConstants.primaryColor,
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
@@ -78,7 +79,7 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
     return Container(
       margin: AppPadding.leftSmall,
       child: Center(
-        child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColor.whiteColor),
+        child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColorConstants.whiteColor),
       ),
     );
   }
@@ -86,14 +87,14 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
   Container _whiteColorContainer(BuildContext context) {
     return Container(
       height: MediaQuery.sizeOf(context).height * 0.4,
-      decoration: BoxDecoration(color: AppColor.whiteColor),
+      decoration: BoxDecoration(color: AppColorConstants.whiteColor),
     );
   }
 
   Container _primaryColorContainer(BuildContext context) {
     return Container(
       height: MediaQuery.sizeOf(context).height * 0.4,
-      decoration: BoxDecoration(color: AppColor.primaryColor),
+      decoration: BoxDecoration(color: AppColorConstants.primaryColor),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 150),
@@ -102,7 +103,7 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
             style: Theme.of(context)
                 .textTheme
                 .headlineLarge
-                ?.copyWith(color: AppColor.whiteColor, fontWeight: FontWeight.bold),
+                ?.copyWith(color: AppColorConstants.whiteColor, fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -114,7 +115,7 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Name Surname",
+          AppStrings.nameSurnameLabel,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 16),
         ),
         const SizedBox(
@@ -125,9 +126,11 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               filled: true,
-              hintText: "Hüseyin Sefa",
+              hintText: AppStrings.nameSurnameHint,
               hintStyle: TextStyle(
-                  color: AppColor.lightgreyColor, fontWeight: FontWeight.normal, fontSize: 14),
+                  color: AppColorConstants.lightgreyColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14),
               fillColor: const Color(0xffF7F7F9),
               border: OutlineInputBorder(
                   borderSide: BorderSide.none, borderRadius: BorderRadius.circular(14))),
@@ -155,7 +158,9 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
               filled: true,
               hintText: _hintTitle,
               hintStyle: TextStyle(
-                  color: AppColor.lightgreyColor, fontWeight: FontWeight.normal, fontSize: 14),
+                  color: AppColorConstants.lightgreyColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14),
               fillColor: const Color(0xffF7F7F9),
               border: OutlineInputBorder(
                   borderSide: BorderSide.none, borderRadius: BorderRadius.circular(14))),
@@ -171,7 +176,8 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
       children: [
         Text(
           AppLocalizations.of(context)!.passwordTitle,
-          style: TextStyle(color: AppColor.blackColor, fontWeight: FontWeight.normal, fontSize: 16),
+          style: TextStyle(
+              color: AppColorConstants.blackColor, fontWeight: FontWeight.normal, fontSize: 16),
         ),
         const SizedBox(
           height: 16,
@@ -192,7 +198,7 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
   Widget _signupButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: AppColorConstants.primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
         ),
@@ -200,7 +206,8 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
         elevation: 0,
       ),
       onPressed: () async {
-        if (emailController.text != "" && passwordController.text != "") {
+        if (emailController.text != AppStrings.emptyString &&
+            passwordController.text != AppStrings.emptyString) {
           await signUp()
               ? Navigator.pushReplacement(
                   context,
@@ -213,7 +220,7 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
       child: Text(
         AppLocalizations.of(context)!.signUpTitle,
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: AppColor.whiteColor,
+              color: AppColorConstants.whiteColor,
               fontWeight: FontWeight.bold,
             ),
       ),
@@ -229,12 +236,14 @@ class _SignupViewState extends State<SignupView> with SignUpPageMixin {
             TextSpan(
               text: AppLocalizations.of(context)!.haveAccountTitle,
               style: TextStyle(
-                  color: AppColor.blackColor, fontWeight: FontWeight.normal, fontSize: 16),
+                  color: AppColorConstants.blackColor, fontWeight: FontWeight.normal, fontSize: 16),
             ),
             TextSpan(
                 text: AppLocalizations.of(context)!.loginTitle,
                 style: TextStyle(
-                    color: AppColor.primaryColor, fontWeight: FontWeight.bold, fontSize: 16),
+                    color: AppColorConstants.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.pop(context);
