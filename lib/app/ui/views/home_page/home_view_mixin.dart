@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/assets/l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/utils/screen_utility.dart';
 import 'package:yemek_soyle_app/app/data/entity/foods.dart';
-import 'package:yemek_soyle_app/app/ui/cubit/home_cubit.dart';
 import 'package:yemek_soyle_app/app/ui/views/home_page/home_view.dart';
 
 mixin HomeViewMixin on State<HomeView> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<HomeCubit>().loadFoods();
-  }
-
   AppLocalizations localization() {
     return AppLocalizations.of(context)!;
   }

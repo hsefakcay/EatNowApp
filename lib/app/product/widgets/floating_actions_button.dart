@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/ui/cubit/cart_page_cubit.dart';
 import 'package:yemek_soyle_app/app/ui/views/cart_page/cart_view.dart';
@@ -13,10 +13,16 @@ class MainFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      foregroundColor: AppColor.whiteColor,
-      backgroundColor: AppColor.primaryColor,
+      foregroundColor: AppColorConstants.whiteColor,
+      backgroundColor: AppColorConstants.primaryColor,
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute<CartView>(builder: (context) => CartView())).then(
+        Navigator.push(
+            context,
+            MaterialPageRoute<CartView>(
+                builder: (context) => BlocProvider<CartPageCubit>(
+                      create: (context) => CartPageCubit(),
+                      child: CartView(),
+                    ))).then(
           (value) {
             context.read<CartPageCubit>().loadCartFoods();
           },

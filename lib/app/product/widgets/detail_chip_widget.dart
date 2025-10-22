@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 
 class DetailChipWidget extends StatelessWidget {
   const DetailChipWidget({
@@ -15,7 +15,7 @@ class DetailChipWidget extends StatelessWidget {
         text,
         style: Theme.of(context).textTheme.labelLarge,
       ),
-      backgroundColor: AppColor.lightgreyColor,
+      backgroundColor: AppColorConstants.lightgreyColor,
     );
   }
 }

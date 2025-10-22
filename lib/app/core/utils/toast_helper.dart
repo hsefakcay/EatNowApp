@@ -1,5 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 
 class ToastHelper {
   ToastHelper._();
@@ -9,7 +9,7 @@ class ToastHelper {
       msg: message,
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.SNACKBAR,
-      backgroundColor: AppColor.redColor,
+      backgroundColor: AppColorConstants.redColor,
       fontSize: 16,
     );
   }

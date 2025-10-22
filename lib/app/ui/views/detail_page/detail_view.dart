@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/assets/l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
 
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/core/utils/screen_utility.dart';
 import 'package:yemek_soyle_app/app/core/utils/snackbar_service.dart';
@@ -15,6 +15,7 @@ import 'package:yemek_soyle_app/app/product/widgets/detail_chip_widget.dart';
 import 'package:yemek_soyle_app/app/product/widgets/favorite_button_widget.dart';
 import 'package:yemek_soyle_app/app/product/widgets/food_image_widget.dart';
 import 'package:yemek_soyle_app/app/ui/cubit/cart_page_cubit.dart';
+import 'package:yemek_soyle_app/app/core/constants/app_strings.dart';
 import 'package:yemek_soyle_app/app/ui/views/cart_page/cart_view.dart';
 import 'package:yemek_soyle_app/app/ui/views/detail_page/detail_view_mixin.dart';
 
@@ -35,59 +36,74 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: AppColor.whiteColor,
-      appBar: AppBar(
-        backgroundColor: AppColor.whiteColor,
-        centerTitle: true,
-        title: Text(
-          localizations.productDetailTitle,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          Padding(
-            padding: AppPadding.rightNormal,
-            child: FavoriteButtonWidget(food: widget.food, isFavoritePage: false),
-          )
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(height: ScreenUtil.screenHeight(context) * 0.05),
-            _favoriteInfoRow(localizations),
-            FoodImage(height: ScreenUtil.screenHeight(context), name: widget.food.image),
-            _foodDetails(context),
-            _orderQuantityRow(context),
-            _detailChips(localizations),
-            SizedBox(height: ScreenUtil.screenHeight(context) * 0.05),
-            _totalPriceRow(ScreenUtil.screenWidth(context), ScreenUtil.screenHeight(context),
-                localizations, context),
+    return BlocProvider(
+      create: (context) => CartPageCubit(),
+      child: Scaffold(
+        backgroundColor: AppColorConstants.whiteColor,
+        appBar: AppBar(
+          backgroundColor: AppColorConstants.whiteColor,
+          centerTitle: true,
+          title: Text(
+            localizations.productDetailTitle,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            Padding(
+              padding: AppPadding.rightNormal,
+              child: FavoriteButtonWidget(
+                food: widget.food,
+                isFavoritePage: false,
+                onFavoriteChanged: () {
+                  // DetailView'da favori değiştiğinde sayfayı yenile
+                  setState(() {});
+                },
+              ),
+            )
           ],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(height: ScreenUtil.screenHeight(context) * 0.05),
+              _favoriteInfoRow(localizations),
+              FoodImage(height: ScreenUtil.screenHeight(context), name: widget.food.image),
+              _foodDetails(context),
+              _orderQuantityRow(context),
+              _detailChips(localizations),
+              SizedBox(height: ScreenUtil.screenHeight(context) * 0.05),
+              _totalPriceRow(
+                  ScreenUtil.screenWidth(context), ScreenUtil.screenHeight(context), localizations),
+            ],
+          ),
         ),
       ),
     );
   }
 
 //siparişin toplam fiyatını gösteren text
-  Row _totalPriceRow(
-      double width, double height, AppLocalizations localizations, BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: width * 0.5,
-          child: Center(
-            child: Text(
-              //toplam tutar
-              '₺ ${int.parse(widget.food.price) * orderQuantity}',
-              style:
-                  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+  Widget _totalPriceRow(double width, double height, AppLocalizations localizations) {
+    return BlocBuilder<CartPageCubit, List<CartFoods>>(
+      builder: (context, cartFoodList) {
+        return Row(
+          children: [
+            SizedBox(
+              width: width * 0.5,
+              child: Center(
+                child: Text(
+                  //toplam tutar
+                  '${AppStrings.currencySymbol} ${int.parse(widget.food.price) * orderQuantity}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
-          ),
-        ),
-        _addToCartButton(height, width, localizations, context),
-      ],
+            _addToCartButton(height, width, localizations, context),
+          ],
+        );
+      },
     );
   }
 
@@ -100,7 +116,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
         Padding(
           padding: AppPadding.allLarge,
           child: Text(
-            "$orderQuantity",
+            "${orderQuantity}",
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
@@ -109,7 +125,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
     );
   }
 
-  SizedBox _addToCartButton(
+  Widget _addToCartButton(
       double height, double width, AppLocalizations localizations, BuildContext context) {
     return SizedBox(
       height: height * 0.08,
@@ -120,7 +136,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
-                  ?.copyWith(color: AppColor.whiteColor, fontWeight: FontWeight.bold)),
+                  ?.copyWith(color: AppColorConstants.whiteColor, fontWeight: FontWeight.bold)),
           onPressed: () {
             if (orderQuantity > 0) {
               //Sepete ekleme fonksiyonu ve sepet sayfasına gitme
@@ -132,18 +148,22 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
                   orderQuantity: orderQuantity.toString(),
                   username: userName);
 
-              context.read<CartPageCubit>().addToCart(cartItem);
-
-              Navigator.push(
-                context,
-                MaterialPageRoute<CartView>(builder: (context) => CartView()),
-              );
+              context.read<CartPageCubit>().addToCart(cartItem).then((_) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<CartView>(
+                      builder: (context) => BlocProvider<CartPageCubit>(
+                            create: (context) => CartPageCubit()..loadCartFoods(),
+                            child: CartView(),
+                          )),
+                );
+              });
             } else {
               // Snackbar gösterimi
               SnackbarService.showSnackbar(
                   context: context,
                   message: localizations.snackBarTitleZeroOrder,
-                  backgroundColor: AppColor.primaryLightColor);
+                  backgroundColor: AppColorConstants.primaryLightColor);
             }
           },
         ),
@@ -159,7 +179,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
         Icon(Icons.thumb_up, color: Colors.green, size: IconSize.normal.value),
         const SizedBox(width: 5),
         Text(
-          "% 87 ${localizations.liked}",
+          "${AppStrings.likePercentagePrefix}${AppStrings.likePercentage} ${localizations.liked}",
           style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green),
         )
       ],
@@ -173,7 +193,7 @@ class _DetailViewState extends State<DetailView> with DetailViewMixin {
         Text(widget.food.name,
             style:
                 Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold)),
-        Text('₺ ${widget.food.price}',
+        Text('${AppStrings.currencySymbol} ${widget.food.price}',
             style:
                 Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold)),
       ],

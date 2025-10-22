@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/constants/icon_sizes.dart';
 import 'package:yemek_soyle_app/app/ui/cubit/home_cubit.dart';
+import 'package:yemek_soyle_app/app/assets/l10n/app_localizations.dart';
 
 class searchFoodTextFieldWidget extends StatelessWidget {
   const searchFoodTextFieldWidget({

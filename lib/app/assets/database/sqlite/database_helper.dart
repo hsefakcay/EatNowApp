@@ -23,7 +23,7 @@ class DatabaseHelper {
       _logger.d("Veritabanı var. Kopyalamaya gerek yok.");
     } else {
       // `rootBundle.load` çağrısı ana iş parçacığında yapılır
-      ByteData data = await rootBundle.load("database/$_databaseName");
+      ByteData data = await rootBundle.load("lib/app/assets/database/yemek_soyle.sqlite");
       List<int> bytes = data.buffer.asUint8List(); // Convert ByteData to List<int> (on main thread)
 
       // Isolated iş parçacığında işlemler için compute kullanılır

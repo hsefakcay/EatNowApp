@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:yemek_soyle_app/app/assets/l10n/app_localizations.dart';
 import 'package:yemek_soyle_app/app/core/constants/app_pading.dart';
-import 'package:yemek_soyle_app/app/core/constants/color.dart';
+import 'package:yemek_soyle_app/app/core/constants/color_constants.dart';
 import 'package:yemek_soyle_app/app/data/entity/foods.dart';
 import 'package:yemek_soyle_app/app/ui/cubit/favorites_page_cubit.dart';
 import 'package:yemek_soyle_app/app/ui/views/detail_page/detail_view.dart';
@@ -19,14 +19,21 @@ class FavoritesView extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesView> with FavoritesViewMixin {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColor.whiteColor,
+    return BlocProvider(
+      create: (context) => FavoritesPageCubit(),
+      child: Scaffold(
+        backgroundColor: AppColorConstants.whiteColor,
         appBar: AppBar(
           automaticallyImplyLeading: false,
+          backgroundColor: AppColorConstants.primaryColor,
           title: _favoritesText(context),
         ),
         body: BlocBuilder<FavoritesPageCubit, List<Foods>>(
           builder: (context, favFoodList) {
+            // İlk yükleme için favori foods'ları yükle
+            if (favFoodList.isEmpty) {
+              context.read<FavoritesPageCubit>().loadFavoriteFoods();
+            }
             if (favFoodList.isNotEmpty) {
               return Padding(
                 padding: AppPadding.allxSmall,
@@ -48,7 +55,14 @@ class _FavoritesPageState extends State<FavoritesView> with FavoritesViewMixin {
                                 builder: (context) => DetailView(food: food),
                               ));
                         },
-                        child: FoodCardWidget(food: food, isFavoritePage: true));
+                        child: FoodCardWidget(
+                          food: food,
+                          isFavoritePage: true,
+                          onFavoriteChanged: () {
+                            // FavoritesView'da favori değiştiğinde sayfayı yenile
+                            setState(() {});
+                          },
+                        ));
                   },
                 ),
               );
@@ -58,12 +72,17 @@ class _FavoritesPageState extends State<FavoritesView> with FavoritesViewMixin {
               );
             }
           },
-        ));
+        ),
+      ),
+    );
   }
 
   Text _favoritesText(BuildContext context) {
     return Text(AppLocalizations.of(context)!.favorites,
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold));
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(fontWeight: FontWeight.bold, color: AppColorConstants.whiteColor));
   }
 
   Text _addFavoriteFoodText(BuildContext context) {
